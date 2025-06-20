@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const Materiaal = require('../models/Materiaal');
 
-router.get('/', (req, res) => {
-  res.json([
-    { id: 1, naam: 'PVC buis 20mm' },
-    { id: 2, naam: 'Koppeling 16mm' },
-  ]);
+router.get('/', async (req, res) => {
+  try {
+    const materialen = await Materiaal.find();
+    res.json(materialen);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Serverfout' });
+  }
 });
 
 module.exports = router;
